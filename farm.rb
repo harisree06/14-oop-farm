@@ -14,10 +14,11 @@ class Farm
 
   ##### CLASS VARIABLE #####
   @@bodies =[]
+  @@field_type = []
 
   puts "----- HARVEST MOON ALPHA 1.0 -----"
 
-  puts "\nWelcome! As a new farmer, what should we work on first?"
+  puts "\nWelcome! As a new farmer, what should we work on first? Pick one of the following below."
   puts "\nOptions:"
   puts "field   -> adds a new field"
   puts "harvest -> harvests crops and adds to total harvested"
@@ -26,12 +27,12 @@ class Farm
   puts "exit    -> exits the program"
 
   # add field and hectare size to the bodies list
-  def self.add(field_and_hectare)
-    if @@bodies.include?(field_and_hectare)
+  def self.add(information)
+    if @@bodies.include?(information)
      puts  "That body already exists in this solar system"
     else
-      @@bodies << field_and_hectare
-      puts "\n#{field_and_hectare.field_name.capitalize} field is #{field_and_hectare.hectare_size} hectares."
+      @@bodies << information
+      puts "\n#{information.field_name.capitalize} field is #{information.hectare_size} hectares."
     end
   end
 
@@ -46,17 +47,44 @@ class Farm
     @@bodies.each do |food|
       total_harvest += food.hectare_size
     end
-    return "\nThe farm has a total of #{} harvested food so far."
+    return "\nThe farm has a total of #{total_harvest} harvested food so far."
 
   end
 
 end
 
-crop = Field.new("crop",50)
+
+#### USER INPUT ####
+
+user_input = gets.chomp.downcase
+
+if user_input == "field"
+  puts "What kind of field is it: corn or wheat?"
+  field_input = gets.chomp.downcase
+
+  puts "How large is the field in hectares?"
+  hectare_input = gets.chomp.to_i
+
+  crop = Field.new(field_input,hectare_input)
+
+elsif user_input == "status"
+  index = 0
+  @@bodies.each do |information|
+    information[index]
+    index += 1
+  end
+  puts Farm.total_harvest
+
+else
+  puts "Sorry, we don't specialize in that farming. Try again."
+end
+
+
+
+
 
 Farm.add(crop)
 
 puts
 puts Farm.all.inspect
-puts
 puts Farm.total_harvest
