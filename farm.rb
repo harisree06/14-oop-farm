@@ -31,7 +31,7 @@ class Farm
      puts  "That body already exists in this solar system"
     else
       @@bodies << field_and_hectare
-      puts "The #{field_and_hectare.name} has been added to the solar system."
+      puts "\n#{field_and_hectare.field_name.capitalize} field is #{field_and_hectare.hectare_size} hectares."
     end
   end
 
@@ -46,7 +46,7 @@ class Farm
     @@bodies.each do |food|
       total_harvest += food.hectare_size
     end
-    return "The farm has #{} harvested food so far."
+    return "\nThe farm has a total of #{} harvested food so far."
 
   end
 
@@ -56,4 +56,7 @@ crop = Field.new("crop",50)
 
 Farm.add(crop)
 
+puts
 puts Farm.all.inspect
+puts
+puts Farm.total_harvest
