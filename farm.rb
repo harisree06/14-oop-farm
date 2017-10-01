@@ -15,51 +15,54 @@ require_relative 'field'
 
 class Farm
 
-  puts "----- HARVEST MOON ALPHA 1.0 -----"
+  def main_menu
+    while true
+      print_farm_option
+      user_selected = gets.chomp
+      call_option(user_selected)
+    end
+  end
 
-  puts "\nWelcome! As a new farmer, what should we work on first? Pick one of the following below."
-  puts "\nOptions:"
-  puts "field   -> adds a new field"
-  puts "harvest -> harvests crops and adds to total harvested"
-  puts "status  -> displays some information about the farm"
-  puts "relax   -> provides lovely descriptions of your fields"
-  puts "exit    -> exits the program"
+  def print_farm_option
 
-#### USER INPUT ####
+    puts "----- HARVEST MOON ALPHA 1.0 -----"
 
-user_input = gets.chomp.downcase
+    puts "\nWelcome! As a new farmer, what should we work on first? Pick one of the following below."
+    puts "\nOptions:"
+    puts "field   -> adds a new field"
+    puts "harvest -> harvests crops and adds to total harvested"
+    puts "status  -> displays some information about the farm"
+    puts "relax   -> provides lovely descriptions of your fields"
+    puts "exit    -> exits the program"
 
-if user_input == "field"
-  puts "What kind of field is it: corn or wheat?"
-  field_input = gets.chomp.downcase
+  end
 
-  puts "How large is the field in hectares?"
-  hectare_input = gets.chomp.to_i
+  def call_option(user_selected)
 
-  crop = Field.new(field_input,hectare_input)
+    case user_selected
+    when "field" then add_new_field
+    when "harvest" then harvest_farm
+    when "status" then farm_status
+    when "relax" then take_a_break
+    when "exit" then abort("Bye bye")
+    end
 
-elsif user_input == "status"
-  puts Farm.all.inspect
-  puts Farm.total_harvest
-
-else
-  puts "Sorry, we don't specialize in that farming. Try again."
-end
-
+  end
 
 ##### FIELD ######
-def add_field
-   legit_field? = false
+def add_new_field
+   corn_or_wheat = false       # this farm only makes corn or wheat atm
 
-   while legit_field? == false
+   while corn_or_wheat == false
      puts "Do you want a corn or wheat field?"
      field_type = gets.chomp
 
      if field_type == "corn" || field_type == "wheat"
-       legit_field? = true
-     else
-       puts "Invalid field type, please try again!"
+       corn_or_wheat = true
+     else   # loop until we get corn or wheat
+       puts "We don't specialize in that! Please try again!"
      end
+
    end
 
    puts "How large is the field in hectares?"
@@ -67,6 +70,7 @@ def add_field
 
    new_field = Field.create(field_type, field_size)
    puts "Added a #{ field_type } field of #{ field_size } hectares!"
+
  end
 
  ###### HARVEST ######
@@ -80,6 +84,3 @@ def add_field
    ##### RELAX #####
    ##### EXIT #####
 end
-puts
-puts Farm.all.inspect
-puts Farm.total_harvest

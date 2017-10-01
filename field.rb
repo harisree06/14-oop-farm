@@ -20,7 +20,7 @@ class Field
   ##### FIELD METHODS ######
   def self.create(type, size)
     new_field = Field.new(type, size)
-    @@fields <<  new_field
+    @@fields << new_field
     return new_field
   end
 
@@ -71,6 +71,13 @@ class Field
     @@fields
   end
 
-
-
 end
+
+### Use these calls to test class Field
+crop = Field.create("corn",50)
+wheat = Field.create("wheat",100)
+puts crop.food_qty
+puts wheat.food_qty
+puts
+puts Field.harvest_fields
+puts
