@@ -5,16 +5,15 @@
 # relax -> provides lovely descriptions of your fields
 # exit -> exits the program
 # --------------------
+
+# STRATEGY
+# Let's start with 'field' option only with two classes: farm and field.
+# This assignment is similiar to the contact phone.
+# The farm class will handle the user's option while the field class will # initialize, store, calculate and access the instant and class methods.
+
 require_relative 'field'
-# require_relative 'harvest'
-# require_relative 'status'
-# require_relative 'relax'
 
 class Farm
-
-  ##### CLASS VARIABLE #####
-  @@bodies =[]
-  @@field_type = []
 
   puts "----- HARVEST MOON ALPHA 1.0 -----"
 
@@ -25,34 +24,6 @@ class Farm
   puts "status  -> displays some information about the farm"
   puts "relax   -> provides lovely descriptions of your fields"
   puts "exit    -> exits the program"
-
-  # add field and hectare size to the bodies list
-  def self.add(information)
-    if @@bodies.include?(information)
-     puts  "That body already exists in this solar system"
-    else
-      @@bodies << information
-      puts "\n#{information.field_name.capitalize} field is #{information.hectare_size} hectares."
-    end
-  end
-
-  def self.all
-    @@bodies
-  end
-
-  def self.total_harvest
-
-    total_harvest = 0
-
-    @@bodies.each do |food|
-      total_harvest += food.hectare_size
-    end
-    return "\nThe farm has a total of #{total_harvest} harvested food so far."
-
-  end
-
-end
-
 
 #### USER INPUT ####
 
@@ -68,11 +39,7 @@ if user_input == "field"
   crop = Field.new(field_input,hectare_input)
 
 elsif user_input == "status"
-  index = 0
-  @@bodies.each do |information|
-    information[index]
-    index += 1
-  end
+  puts Farm.all.inspect
   puts Farm.total_harvest
 
 else
@@ -80,11 +47,39 @@ else
 end
 
 
+##### FIELD ######
+def add_field
+   legit_field? = false
 
+   while legit_field? == false
+     puts "Do you want a corn or wheat field?"
+     field_type = gets.chomp
 
+     if field_type == "corn" || field_type == "wheat"
+       legit_field? = true
+     else
+       puts "Invalid field type, please try again!"
+     end
+   end
 
-Farm.add(crop)
+   puts "How large is the field in hectares?"
+   field_size = gets.to_i
 
+   new_field = Field.create(field_type, field_size)
+   puts "Added a #{ field_type } field of #{ field_size } hectares!"
+ end
+
+ ###### HARVEST ######
+ def harvest_farm
+     Field.harvest_fields
+
+     puts "The farm has #{ Field.total_harvest } harvested food so far."
+   end
+
+   ##### status #####
+   ##### RELAX #####
+   ##### EXIT #####
+end
 puts
 puts Farm.all.inspect
 puts Farm.total_harvest
