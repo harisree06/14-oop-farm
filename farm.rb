@@ -82,5 +82,14 @@ def add_new_field
 
    ##### status #####
    ##### RELAX #####
+  def take_a_break
+
+    corn_size = Field.total_size("corn")
+    wheat_size = Field.total_size("wheat")
+
+    puts "#{corn_size} hectares of tall green stalks rustling in the breeze fill your horizon. The sun hangs low, casting an orange glow on a sea of #{wheat_size}hectares of wheat."
+    
+  end
+
    ##### EXIT #####
 end

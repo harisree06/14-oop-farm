@@ -25,12 +25,15 @@ class Field
   end
 
   def food_qty
+
     if self.type == "corn"
       food_qty = @size * 20
     else  # wheat
       food_qty = @size * 30
     end
+
     return food_qty
+
   end
 
   ###### FIELD END ######
@@ -41,8 +44,10 @@ class Field
   def self.harvest_fields
 
     @@fields.each do |field|
+
       @@total_harvest += field.food_qty
-      puts "Harvesting #{ field.food_qty } from #{ field.size } hectare #{ field.type } field."
+      puts "Harvesting #{field.food_qty} from #{field.size} hectare #{field.type} field."
+
     end
 
   end
@@ -52,7 +57,10 @@ class Field
     @@total_harvest
   end
 
-  def self.total_hectares(type)
+  ###### HARVEST END ######
+
+  #### RELAX methods ####
+  def self.total_size(type)
     total = 0
     @@fields.each do |field|
       if field.type == type
@@ -62,9 +70,6 @@ class Field
     return total
   end
 
-  ###### HARVEST END ######
-
-  ###### RELAX
   ##### status
 
   def self.all
@@ -78,6 +83,7 @@ crop = Field.create("corn",50)
 wheat = Field.create("wheat",100)
 puts crop.food_qty
 puts wheat.food_qty
-puts
+puts "----"
 puts Field.harvest_fields
 puts
+puts Field.all.inspect
